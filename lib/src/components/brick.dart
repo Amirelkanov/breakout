@@ -24,6 +24,7 @@ class Brick extends RectangleComponent
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     removeFromParent();
+    game.score.value++;
 
     // If only one brick left ON COLLISION START then after collision there
     // will be no bricks => win
