@@ -29,7 +29,7 @@ class BrickBreaker extends FlameGame
 
   double get height => size.y;
 
-  late PlayState _playState; // lateinit
+  late PlayState _playState;
 
   PlayState get playState => _playState;
 
@@ -50,12 +50,11 @@ class BrickBreaker extends FlameGame
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();
-
-    // Начало координат с верхнего левого угла
     camera.viewfinder.anchor = Anchor.topLeft;
 
     world.add(PlayArea());
-    playState = PlayState.welcome; // Add from here...
+    debugMode = true;
+    playState = PlayState.welcome;
   }
 
   void startGame() {
@@ -75,7 +74,7 @@ class BrickBreaker extends FlameGame
         velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2)
             .normalized() // This keeps the speed of the ball consistent no matter which direction the ball goes
           // ball's velocity is then scaled up to be a 1/4 of the height of the game
-          ..scale(height / 4)));
+          ..scale(height / 3)));
 
     world.add(Bat(
         size: Vector2(batWidth, batHeight),
