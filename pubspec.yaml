@@ -1,4 +1,4 @@
-name: breakout
+name: brick_breaker
 description: "Breakout Flutter game."
 publish_to: 'none' # prevents the package from being accidentally published to pub.dev using `flutter pub publish`
 version: 1.0.0+1
@@ -7,7 +7,7 @@ environment:
   sdk: ^3.6.1
 
 dependencies:
-  flame: ^1.16.0
+  flame: ^1.23.0
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.0
