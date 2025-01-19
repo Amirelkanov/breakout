@@ -1,6 +1,7 @@
 import 'package:brick_breaker/src/brick_breaker.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/cupertino.dart';
 
 class AudioManager extends Component with HasGameRef<BrickBreaker> {
   AudioManager();
@@ -19,7 +20,7 @@ class AudioManager extends Component with HasGameRef<BrickBreaker> {
     FlameAudio.bgm.initialize();
   }
 
-  bool audioOn = true;
+  ValueNotifier<bool> audioOn = ValueNotifier(true);
 
   // Randomly chooses what sound to play
   void choicePlay(List<String> audioFiles) {
@@ -27,18 +28,19 @@ class AudioManager extends Component with HasGameRef<BrickBreaker> {
   }
 
   void play(String audioFile) {
-    if (audioOn) FlameAudio.play(audioFile, volume: 0.4);
+    if (audioOn.value) FlameAudio.play(audioFile, volume: 0.4);
   }
 
   void playBg(String audioFile) {
-    if (audioOn) FlameAudio.bgm.play(audioFile, volume: 0.4);
+    if (audioOn.value) FlameAudio.bgm.play(audioFile, volume: 0.4);
   }
 
   void toggleSound() {
-    audioOn = !audioOn;
+    audioOn.value = !audioOn.value;
 
-    if (audioOn) {
-      if (game.playState == PlayState.playing) {
+    if (audioOn.value) {
+      if (game.playState == PlayState.playing ||
+          game.playState == PlayState.gameOver) {
         playBg('game.mp3');
       } else if (game.playState == PlayState.welcome) {
         playBg('menu.mp3');

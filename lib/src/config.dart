@@ -6,9 +6,7 @@ const batHeight = ballRadius * 2;
 
 const brickMargin = gameWidth * 0.015;
 
-const numOfBricksInARow = 1;
-const numOfBrickRows = 1;
-
+const numOfBricksInARow = 5;
 final brickWidth =
     (gameWidth - (brickMargin * (numOfBricksInARow + 1))) / numOfBricksInARow;
 const brickHeight = gameHeight * 0.03;

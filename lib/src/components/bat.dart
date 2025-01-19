@@ -26,12 +26,15 @@ class Bat extends PositionComponent
   @override
   void render(Canvas canvas) {
     super.render(canvas);
+
+    Size batSize = size.toSize();
     canvas.drawRRect(
-        RRect.fromRectAndRadius(
-          Offset.zero & size.toSize(),
-          cornerRadius,
-        ),
-        _paint);
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(0.0, 0.0, batSize.width, batSize.height),
+        cornerRadius,
+      ),
+      _paint,
+    );
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:brick_breaker/src/widgets/game_settings_card.dart';
 import 'package:brick_breaker/src/widgets/score_card.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -75,21 +76,8 @@ class _GameAppState extends State<GameApp> {
                         ),
                       ),
                     ),
-                    // TODO: add the row with mute button and level picker
-                    // horizontal arrangement - space between
-                    // level picker disappears in playing state
-                    IconButton(
-                      icon: Icon(
-                        game.audio.audioOn ? Icons.volume_up : Icons.volume_off,
-                        size: 30,
-                        color: Colors.deepPurple.shade700,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          game.audio.toggleSound();
-                        });
-                      },
-                    ),
+                    GameSettingsCard(
+                        levelManager: game.level, audioManager: game.audio)
                   ],
                 ),
               ),

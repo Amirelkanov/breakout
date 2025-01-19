@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:brick_breaker/src/managers/audio_manager.dart';
+import 'package:brick_breaker/src/managers/level_manager.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -22,6 +23,7 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, TapDetector {
         );
 
   AudioManager audio = AudioManager();
+  LevelManager level = LevelManager();
 
   final ValueNotifier<int> score = ValueNotifier(0);
   final rand = math.Random();
@@ -95,7 +97,7 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, TapDetector {
     // Add bricks
     world.addAll([
       for (var i = 0; i < numOfBricksInARow; i++)
-        for (var j = 1; j <= numOfBrickRows; j++)
+        for (var j = 1; j <= level.numOfBrickRows; j++)
           Brick(
             position: Vector2(
               (i + 0.5) * brickWidth + (i + 1) * brickMargin,
