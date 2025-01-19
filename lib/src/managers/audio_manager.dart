@@ -8,9 +8,9 @@ class AudioManager extends Component with HasGameRef<BrickBreaker> {
 
   initialize() async {
     await FlameAudio.audioCache.loadAll([
-      'brick_hit_1.wav',
-      'brick_hit_2.wav',
-      'brick_hit_3.wav',
+      'brick_destroy_1.wav',
+      'brick_destroy_2.wav',
+      'brick_destroy_3.wav',
       'failed_ball.wav',
       'game.mp3',
       'game_win.mp3',

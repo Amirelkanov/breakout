@@ -9,7 +9,12 @@ import 'bat.dart';
 
 class Brick extends RectangleComponent
     with CollisionCallbacks, HasGameReference<BrickBreaker> {
-  Brick({required super.position, required Color color})
+  int strength;
+
+  Brick(
+      {required super.position,
+      Color color = Colors.deepPurpleAccent,
+      this.strength = 1})
       : super(
           size: Vector2(brickWidth, brickHeight),
           anchor: Anchor.center,
@@ -19,20 +24,48 @@ class Brick extends RectangleComponent
           children: [RectangleHitbox()],
         );
 
+  void _updateColor() {
+    if (strength == 3) {
+      paint.color = Colors.deepPurpleAccent.shade700;
+    } else if (strength == 2) {
+      paint.color = Colors.deepPurpleAccent.shade400;
+    } else if (strength == 1) {
+      paint.color = Colors.deepPurpleAccent.shade200;
+    } else {
+      paint.color = Colors.transparent;
+    }
+  }
+
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
-    game.audio.play('brick_hit_1.wav');
-    removeFromParent();
-    game.score.value++;
 
-    // If only one brick left ON COLLISION START then after collision there
-    // will be no bricks => win
+    if (strength > 1) {
+      game.audio.play('brick_hit.wav');
+      strength--;
+      _updateColor();
+    } else {
+      game.audio.choicePlay([
+        'brick_destroy_1.wav',
+        'brick_destroy_2.wav',
+        'brick_destroy_3.wav'
+      ]);
+
+      removeFromParent();
+      game.score.value++;
+    }
+
     if (game.world.children.query<Brick>().length == 1) {
       game.playState = PlayState.won;
       game.world.removeAll(game.world.children.query<Ball>());
       game.world.removeAll(game.world.children.query<Bat>());
     }
+  }
+
+  @override
+  void onLoad() {
+    super.onLoad();
+    _updateColor();
   }
 }

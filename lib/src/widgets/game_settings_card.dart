@@ -33,8 +33,7 @@ class GameSettingsCard extends StatelessWidget {
                   items: Difficulty.values.map((Difficulty difficulty) {
                     return DropdownMenuItem<Difficulty>(
                       value: difficulty,
-                      child: Text(
-                          difficulty.toString().split('.').last.toUpperCase()),
+                      child: Text(difficulty.name.toUpperCase()),
                     );
                   }).toList(),
                 );
