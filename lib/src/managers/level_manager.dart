@@ -22,6 +22,5 @@ class LevelManager extends Component with HasGameRef<BrickBreaker> {
 
   void changeLevel(Difficulty newDifficulty) {
       difficulty.value = newDifficulty;
-
   }
 }
