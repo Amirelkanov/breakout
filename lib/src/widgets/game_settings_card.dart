@@ -1,5 +1,6 @@
 import 'package:brick_breaker/src/managers/audio_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:pixelarticons/pixel.dart';
 
 import '../managers/level_manager.dart';
 
@@ -43,7 +44,7 @@ class GameSettingsCard extends StatelessWidget {
             builder: (BuildContext context, audioOn, Widget? child) {
               return IconButton(
                   icon: Icon(
-                    audioOn ? Icons.volume_up : Icons.volume_off,
+                    audioOn ? Pixel.volume3 : Pixel.volumex,
                     size: 30,
                     color: Colors.deepPurple.shade700,
                   ),

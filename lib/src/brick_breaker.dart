@@ -66,9 +66,8 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, TapDetector {
     await audio.initialize();
 
     camera.viewfinder.anchor = Anchor.topLeft;
-
-    world.add(PlayArea());
     playState = PlayState.welcome;
+    world.add(PlayArea());
   }
 
   void startGame() {

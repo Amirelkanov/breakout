@@ -28,6 +28,24 @@ class Ball extends CircleComponent
   void update(double dt) {
     super.update(dt);
     position += velocity * dt;
+
+    // Left boundary
+    if (position.x - radius < 0) {
+      position.x = radius;
+      velocity.x = -velocity.x;
+    }
+
+    // Right boundary
+    if (position.x + radius > game.width) {
+      position.x = game.width - radius;
+      velocity.x = -velocity.x;
+    }
+
+    // Top boundary
+    if (position.y - radius < 0) {
+      position.y = radius;
+      velocity.y = -velocity.y;
+    }
   }
 
   @override
