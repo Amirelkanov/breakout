@@ -81,6 +81,18 @@ class _GameAppState extends State<GameApp> {
                         ),
                       ),
                     ),
+                    IconButton(
+                      icon: Icon(
+                        game.audio.audioOn ? Icons.volume_up : Icons.volume_off,
+                        size: 30,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          game.audio.toggleSound();
+                        });
+                      },
+                    ),
                   ],
                 ),
               ),
