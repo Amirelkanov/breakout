@@ -27,7 +27,7 @@ class AudioManager extends Component with HasGameRef<BrickBreaker> {
   }
 
   void play(String audioFile) {
-    if (audioOn) FlameAudio.play(audioFile);
+    if (audioOn) FlameAudio.play(audioFile, volume: 0.4);
   }
 
   void playBg(String audioFile) {

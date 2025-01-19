@@ -30,22 +30,13 @@ class _GameAppState extends State<GameApp> {
       theme: ThemeData(
         useMaterial3: true,
         textTheme: GoogleFonts.pressStart2pTextTheme().apply(
-          bodyColor: const Color(0xff184e77),
-          displayColor: const Color(0xff184e77),
+          bodyColor: Colors.deepPurple,
+          displayColor: Colors.deepPurple.shade400,
         ),
       ),
       home: Scaffold(
         body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xffa9d6e5),
-                Color(0xfff2e8cf),
-              ],
-            ),
-          ),
+          color: Colors.deepPurple.shade200,
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -55,7 +46,10 @@ class _GameAppState extends State<GameApp> {
                     ScoreCard(score: game.score),
                     Expanded(
                       child: FittedBox(
-                        child: SizedBox(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.deepPurple.shade50, width: 3)),
                           width: gameWidth,
                           height: gameHeight,
                           child: GameWidget(
@@ -81,11 +75,14 @@ class _GameAppState extends State<GameApp> {
                         ),
                       ),
                     ),
+                    // TODO: add the row with mute button and level picker
+                    // horizontal arrangement - space between
+                    // level picker disappears in playing state
                     IconButton(
                       icon: Icon(
                         game.audio.audioOn ? Icons.volume_up : Icons.volume_off,
                         size: 30,
-                        color: Colors.black,
+                        color: Colors.deepPurple.shade700,
                       ),
                       onPressed: () {
                         setState(() {

@@ -5,7 +5,7 @@ import 'package:brick_breaker/src/managers/audio_manager.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'components/components.dart';
 import 'config.dart';
@@ -47,9 +47,11 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, TapDetector {
         overlays.add(playState.name);
         audio.playBg('game_win.mp3');
       case PlayState.playing:
-        overlays.remove(PlayState.welcome.name);
-        overlays.remove(PlayState.gameOver.name);
-        overlays.remove(PlayState.won.name);
+        overlays.removeAll([
+          PlayState.welcome.name,
+          PlayState.gameOver.name,
+          PlayState.won.name
+        ]);
         audio.playBg('game.mp3');
     }
   }
@@ -83,7 +85,6 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, TapDetector {
         position: size / 2,
         velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2)
             .normalized() // This keeps the speed of the ball consistent no matter which direction the ball goes
-          // ball's velocity is then scaled up to be a 1/4 of the height of the game
           ..scale(height / 3)));
 
     world.add(Bat(
@@ -93,14 +94,14 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, TapDetector {
 
     // Add bricks
     world.addAll([
-      for (var i = 0; i < brickColors.length; i++)
-        for (var j = 1; j <= 5; j++)
+      for (var i = 0; i < numOfBricksInARow; i++)
+        for (var j = 1; j <= numOfBrickRows; j++)
           Brick(
             position: Vector2(
               (i + 0.5) * brickWidth + (i + 1) * brickMargin,
               (j + 2.0) * brickHeight + j * brickMargin,
             ),
-            color: brickColors[i],
+            color: Colors.deepPurpleAccent,
           ),
     ]);
   }
@@ -112,5 +113,5 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   @override
-  Color backgroundColor() => const Color(0xfff2e8cf);
+  Color backgroundColor() => Colors.deepPurple.shade100;
 }
