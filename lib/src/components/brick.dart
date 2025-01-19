@@ -23,6 +23,7 @@ class Brick extends RectangleComponent
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
+    game.audio.play('brick_hit_1.wav');
     removeFromParent();
     game.score.value++;
 

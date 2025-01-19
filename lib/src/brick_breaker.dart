@@ -1,19 +1,18 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:brick_breaker/src/managers/audio_manager.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 
 import 'components/components.dart';
 import 'config.dart';
 
 enum PlayState { welcome, playing, gameOver, won }
 
-class BrickBreaker extends FlameGame
-    with HasCollisionDetection, KeyboardEvents, TapDetector {
+class BrickBreaker extends FlameGame with HasCollisionDetection, TapDetector {
   BrickBreaker()
       : super(
           camera: CameraComponent.withFixedResolution(
@@ -21,6 +20,8 @@ class BrickBreaker extends FlameGame
             height: gameHeight,
           ),
         );
+
+  AudioManager audio = AudioManager();
 
   final ValueNotifier<int> score = ValueNotifier(0);
   final rand = math.Random();
@@ -37,23 +38,32 @@ class BrickBreaker extends FlameGame
     _playState = playState;
     switch (playState) {
       case PlayState.welcome:
+        overlays.add(playState.name);
+        audio.playBg('menu.mp3');
       case PlayState.gameOver:
+        overlays.add(playState.name);
+        audio.play('failed_ball.wav');
       case PlayState.won:
         overlays.add(playState.name);
+        audio.playBg('game_win.mp3');
       case PlayState.playing:
         overlays.remove(PlayState.welcome.name);
         overlays.remove(PlayState.gameOver.name);
         overlays.remove(PlayState.won.name);
+        audio.playBg('game.mp3');
     }
   }
 
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();
+
+    await add(audio);
+    await audio.initialize();
+
     camera.viewfinder.anchor = Anchor.topLeft;
 
     world.add(PlayArea());
-    debugMode = true;
     playState = PlayState.welcome;
   }
 
@@ -99,22 +109,6 @@ class BrickBreaker extends FlameGame
   void onTap() {
     super.onTap();
     startGame();
-  }
-
-  @override
-  KeyEventResult onKeyEvent(
-      KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    super.onKeyEvent(event, keysPressed);
-    switch (event.logicalKey) {
-      case LogicalKeyboardKey.arrowLeft:
-        world.children.query<Bat>().first.moveBy(-batStep);
-      case LogicalKeyboardKey.arrowRight:
-        world.children.query<Bat>().first.moveBy(batStep);
-      case LogicalKeyboardKey.space:
-      case LogicalKeyboardKey.enter:
-        startGame();
-    }
-    return KeyEventResult.handled;
   }
 
   @override
