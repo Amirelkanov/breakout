@@ -77,7 +77,10 @@ class _GameAppState extends State<GameApp> {
                       ),
                     ),
                     GameSettingsCard(
-                        levelManager: game.level, audioManager: game.audio)
+                      levelManager: game.level,
+                      audioManager: game.audio,
+                      isPlaying: game.isPlaying,
+                    )
                   ],
                 ),
               ),

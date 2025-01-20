@@ -26,6 +26,8 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, TapDetector {
   LevelManager level = LevelManager();
 
   final ValueNotifier<int> score = ValueNotifier(0);
+  final ValueNotifier<bool> isPlaying = ValueNotifier(false);
+
   final rand = math.Random();
 
   double get width => size.x;
@@ -40,15 +42,19 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, TapDetector {
     _playState = playState;
     switch (playState) {
       case PlayState.welcome:
+        isPlaying.value = false;
         overlays.add(playState.name);
         audio.playBg('menu.mp3');
       case PlayState.gameOver:
+        isPlaying.value = false;
         overlays.add(playState.name);
         audio.play('failed_ball.wav');
       case PlayState.won:
+        isPlaying.value = false;
         overlays.add(playState.name);
         audio.playBg('game_win.mp3');
       case PlayState.playing:
+        isPlaying.value = true;
         overlays.removeAll([
           PlayState.welcome.name,
           PlayState.gameOver.name,

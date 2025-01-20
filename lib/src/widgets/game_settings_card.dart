@@ -9,22 +9,47 @@ class GameSettingsCard extends StatelessWidget {
     super.key,
     required this.levelManager,
     required this.audioManager,
+    required this.isPlaying,
   });
 
   final LevelManager levelManager;
   final AudioManager audioManager;
+  final ValueNotifier<bool> isPlaying;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 18, 12, 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          ValueListenableBuilder<Difficulty>(
-              valueListenable: levelManager.difficulty,
-              builder: (BuildContext context, difficulty, Widget? child) {
-                return DropdownButton<Difficulty>(
+        padding: const EdgeInsets.fromLTRB(12, 18, 12, 6),
+        child: ValueListenableBuilder<bool>(
+            valueListenable: isPlaying,
+            builder: (BuildContext context, isPlaying, Widget? child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  LevelSelector(
+                      levelManager: levelManager, isPlaying: isPlaying),
+                  AudioBtn(audioManager: audioManager)
+                ],
+              );
+            }));
+  }
+}
+
+class LevelSelector extends StatelessWidget {
+  const LevelSelector(
+      {super.key, required this.levelManager, required this.isPlaying});
+
+  final LevelManager levelManager;
+  final bool isPlaying;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<Difficulty>(
+        valueListenable: levelManager.difficulty,
+        builder: (BuildContext context, difficulty, Widget? child) {
+          return isPlaying
+              ? Text(difficulty.name.toUpperCase())
+              : DropdownButton<Difficulty>(
                   value: difficulty,
                   onChanged: (Difficulty? newDifficulty) {
                     if (newDifficulty != null) {
@@ -38,23 +63,33 @@ class GameSettingsCard extends StatelessWidget {
                     );
                   }).toList(),
                 );
-              }),
-          ValueListenableBuilder<bool>(
-            valueListenable: audioManager.audioOn,
-            builder: (BuildContext context, audioOn, Widget? child) {
-              return IconButton(
-                  icon: Icon(
-                    audioOn ? Pixel.volume3 : Pixel.volumex,
-                    size: 30,
-                    color: Colors.deepPurple.shade700,
-                  ),
-                  onPressed: () {
-                    audioManager.toggleSound();
-                  });
-            },
-          )
-        ],
-      ),
+        });
+  }
+}
+
+class AudioBtn extends StatelessWidget {
+  const AudioBtn({
+    super.key,
+    required this.audioManager,
+  });
+
+  final AudioManager audioManager;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<bool>(
+      valueListenable: audioManager.audioOn,
+      builder: (BuildContext context, audioOn, Widget? child) {
+        return IconButton(
+            icon: Icon(
+              audioOn ? Pixel.volume3 : Pixel.volumex,
+              size: 30,
+              color: Colors.deepPurple.shade700,
+            ),
+            onPressed: () {
+              audioManager.toggleSound();
+            });
+      },
     );
   }
 }
