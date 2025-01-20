@@ -1,4 +1,5 @@
 import 'package:brick_breaker/src/brick_breaker.dart';
+import 'package:dart_random_choice/dart_random_choice.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,7 +25,7 @@ class AudioManager extends Component with HasGameRef<BrickBreaker> {
 
   // Randomly chooses what sound to play
   void choicePlay(List<String> audioFiles) {
-    play(audioFiles[game.rand.nextInt(audioFiles.length)]);
+    play(randomChoice(audioFiles));
   }
 
   void play(String audioFile) {

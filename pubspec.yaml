@@ -9,6 +9,7 @@ environment:
 dependencies:
   flame: ^1.23.0
   flame_audio: ^2.10.7
+  dart_random_choice: ^0.2.0
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.0

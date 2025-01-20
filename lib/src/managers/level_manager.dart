@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:brick_breaker/src/brick_breaker.dart';
+import 'package:dart_random_choice/dart_random_choice.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -21,6 +24,18 @@ class LevelManager extends Component with HasGameRef<BrickBreaker> {
   }
 
   void changeLevel(Difficulty newDifficulty) {
-      difficulty.value = newDifficulty;
+    difficulty.value = newDifficulty;
+  }
+
+  int getBrickStrength(Random rand) {
+    return randomChoice([
+      1,
+      2,
+      3
+    ], [
+      0.6,
+      0.3 * (difficulty.value.index + 1),
+      0.1 * (difficulty.value.index + 1)
+    ]);
   }
 }

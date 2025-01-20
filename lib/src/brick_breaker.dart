@@ -108,7 +108,7 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, TapDetector {
               (i + 0.5) * brickWidth + (i + 1) * brickMargin,
               (j + 2.0) * brickHeight + j * brickMargin,
             ),
-            strength: rand.nextInt(3) + 1,
+            strength: level.getBrickStrength(rand),
           ),
     ]);
   }
